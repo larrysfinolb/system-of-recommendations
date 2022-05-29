@@ -3,24 +3,16 @@ package com.example.systemofrecommendations;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.view.View;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     Spinner listItems;
 
-    String shoppingHistory[][] = {
-=======
-import android.view.View;
-
-import java.util.HashMap;
-
-public class MainActivity extends AppCompatActivity {
-
     String[][] shoppingHistory = {
->>>>>>> e9e1542296409f2df2c874eb687e8924edf02bb0
             {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Café"},
             {"Juan", "Fanela deportiva", "Café", "Cafetera", "Café", "Café"},
             {"Janina", "Lentes para sol", "Zapatos deportivos", "Franela deportiva", "Zapatos deportivos", "Calcetines"},
@@ -36,12 +28,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
         listItems = findViewById(R.id.listItems);
         ArrayAdapter<CharSequence> adapterListItems = ArrayAdapter.createFromResource(this, R.array.items, android.R.layout.simple_spinner_item);
         adapterListItems.setDropDownViewResource(android.R.layout.simple_spinner_item);
         listItems.setAdapter(adapterListItems);
-=======
+
         returnRecommendation(shoppingHistory, newUser);
     }
 
@@ -110,6 +101,5 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println(recommendations);
 
         return recommendations;
->>>>>>> e9e1542296409f2df2c874eb687e8924edf02bb0
     }
 }

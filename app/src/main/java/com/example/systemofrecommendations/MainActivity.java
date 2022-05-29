@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
     TextView recommendations;
 
     String[][] shoppingHistory = {
-            {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Café"},
-            {"Juan", "Fanela deportiva", "Café", "Cafetera", "Café", "Café"},
+            {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Cafe"},
+            {"Juan", "Fanela deportiva", "Cafe", "Cafetera", "Cafe", "Cafe"},
             {"Janina", "Lentes para sol", "Zapatos deportivos", "Franela deportiva", "Zapatos deportivos", "Calcetines"},
-            {"Henrique", "2001: A Space Odyssey(dvd)", "Audífonos", "Franela deportiva", "Guantes", "Sandalias"},
+            {"Henrique", "2001: A Space Odyssey(dvd)", "Audifonos", "Franela deportiva", "Guantes", "Sandalias"},
             {"Victor", "Franela deportiva", "Sandalias", "Lentes para sol", "Moby Dick(novela)", "Protector solar"},
-            {"Tobias", "Moby Dick(novela)", "Café", "2001: A Space Odyssey(dvd)", "Audífonos", "Café"}
+            {"Tobias", "Moby Dick(novela)", "Cafe", "2001: A Space Odyssey(dvd)", "Audifonos", "Cafe"}
     };
 
     // String[] newUser = {"Te verde", "Franela deportiva", "Lentes para sol", "Sandalias"};
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         recommendations = findViewById(R.id.recommendations);
     }
 
-    void buyItem() {
+    public void buyItem(View view) {
         String item = listItems.getSelectedItem().toString();
         newUser[counter] = item + "\n";
         counter++;

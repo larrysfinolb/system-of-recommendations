@@ -18,14 +18,14 @@ public class MainActivity extends AppCompatActivity {
 
     String[][] shoppingHistory = {
             {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Cafe"},
-            {"Juan", "Fanela deportiva", "Cafe", "Cafetera", "Cafe", "Cafe"},
+            {"Juan", "Franela deportiva", "Cafe", "Cafetera", "Cafe", "Cafe"},
             {"Janina", "Lentes para sol", "Zapatos deportivos", "Franela deportiva", "Zapatos deportivos", "Calcetines"},
             {"Henrique", "2001: A Space Odyssey(dvd)", "Audifonos", "Franela deportiva", "Guantes", "Sandalias"},
             {"Victor", "Franela deportiva", "Sandalias", "Lentes para sol", "Moby Dick(novela)", "Protector solar"},
             {"Tobias", "Moby Dick(novela)", "Cafe", "2001: A Space Odyssey(dvd)", "Audifonos", "Cafe"}
     };
 
-    // String[] newUser = {"Te verde", "Franela deportiva", "Lentes para sol", "Sandalias"};
+    //String[] newUser = {"Te verde", "Franela deportiva", "Lentes para sol", "Sandalias"};
     String[] newUser = new String[4];
     int counter = 0;
 
@@ -45,28 +45,37 @@ public class MainActivity extends AppCompatActivity {
 
     public void buyItem(View view) {
         String item = listItems.getSelectedItem().toString();
-        newUser[counter] = item + "\n";
+        newUser[counter] = item;
         counter++;
         String newText = txt_listItems.getText().toString();
         for (int i = 0; i < counter; i++) {
             txt_listItems.setText(newText + newUser[i]);
         }
-        if(counter == 3) {
+        if(counter == 4) {
+            /*for (int i = 0; i < newUser.length; i++){
+                System.out.println(newUser[i]);
+            }*/
             recommendations.setText(returnRecommendation(shoppingHistory, newUser));
+            System.out.println(returnRecommendation(shoppingHistory, newUser));
         }
     }
 
-    String returnRecommendation(String[][] buyLog, String[] targetUser) {
+    public String returnRecommendation(String[][] buyLog, String[] targetUser) {
 
         HashMap<String, Integer> similarity = new HashMap<String, Integer>();
 
+        for (int i = 0; i < targetUser.length; i++){
+            System.out.println(targetUser[i]);
+        }
 
         //Hacemos un hashmap con modelo <usuario, similitud> para hacer una lista de similitud
         for (int i = 0; i < buyLog.length; i++) {
             for (int j = 0; j < buyLog[i].length; j++) {
                 if (j != 0) {
                     for (int m = 0; m < targetUser.length; m++) {
-                        if (targetUser[m] == buyLog[i][j]) {
+                        //System.out.println(targetUser[m].toString() + " - " + buyLog[i][j].toString());
+                        if (targetUser[m].equals(buyLog[i][j])) {
+                            System.out.println("equisde");
                             if (similarity.get(buyLog[i][0]) == null) {
                                 similarity.put(buyLog[i][0], 1);
                             } else {
@@ -78,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        System.out.println(similarity);
+
 
         String mostSimilarityUser = "";
         int counter = 0;
@@ -92,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        System.out.println(mostSimilarityUser);
+
         boolean intoArray = false;
 
         String recommendations = "";
@@ -102,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int j = 0; j < buyLog.length; j++) {
                     if (j > 0) {
                         for (int k = 0; k < targetUser.length; k++) {
-                            if (targetUser[k] == buyLog[i][j]) {
+                            if (targetUser[k].equals(buyLog[i][j])) {
                                 intoArray = true;
                             }
                         }

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">System of Recommendations</string>
+    <string-array name="items">
+        <item>Guantes</item>
+        <item>Moby Dick(novela)</item>
+        <item>Audifonos</item>
+        <item>Lentes para sol</item>
+        <item>Cafe</item>
+        <item>Franela deportiva</item>
+        <item>Cafetera</item>
+        <item>Zapatos deportivos</item>
+        <item>Calcetines</item>
+        <item>2001: A Space Odyssey(dvd)</item>
+        <item>Sandalias</item>
+        <item>Protector solar</item>
+    </string-array>
 </resources>

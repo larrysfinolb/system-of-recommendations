@@ -3,8 +3,12 @@ package com.example.systemofrecommendations;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
+
+    Spinner listItems;
 
     String shoppingHistory[][] = {
             {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Café"},
@@ -19,5 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listItems = findViewById(R.id.listItems);
+        ArrayAdapter<CharSequence> adapterListItems = ArrayAdapter.createFromResource(this, R.array.items, android.R.layout.simple_spinner_item);
+        adapterListItems.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        listItems.setAdapter(adapterListItems);
     }
 }

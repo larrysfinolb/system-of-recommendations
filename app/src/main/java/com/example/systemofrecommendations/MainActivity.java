@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.view.View;
+import android.widget.TextView;
+
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     Spinner listItems;
+    TextView txt_listItems;
+    TextView recommendations;
 
     String[][] shoppingHistory = {
             {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Café"},
@@ -21,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
             {"Tobias", "Moby Dick(novela)", "Café", "2001: A Space Odyssey(dvd)", "Audífonos", "Café"}
     };
 
-    String[] newUser = {"Te verde", "Franela deportiva", "Lentes para sol", "Sandalias"};
+    // String[] newUser = {"Te verde", "Franela deportiva", "Lentes para sol", "Sandalias"};
+    String[] newUser = new String[4];
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +39,35 @@ public class MainActivity extends AppCompatActivity {
         adapterListItems.setDropDownViewResource(android.R.layout.simple_spinner_item);
         listItems.setAdapter(adapterListItems);
 
-        returnRecommendation(shoppingHistory, newUser);
+        txt_listItems = findViewById(R.id.txt_listItems);
+        recommendations = findViewById(R.id.recommendations);
     }
 
-    String returnRecommendation(String [][] buyLog, String [] targetUser){
+    void buyItem() {
+        String item = listItems.getSelectedItem().toString();
+        newUser[counter] = item + "\n";
+        counter++;
+        String newText = txt_listItems.getText().toString();
+        for (int i = 0; i < counter; i++) {
+            txt_listItems.setText(newText + newUser[i]);
+        }
+        if(counter == 3) {
+            recommendations.setText(returnRecommendation(shoppingHistory, newUser));
+        }
+    }
+
+    String returnRecommendation(String[][] buyLog, String[] targetUser) {
 
         HashMap<String, Integer> similarity = new HashMap<String, Integer>();
 
 
         //Hacemos un hashmap con modelo <usuario, similitud> para hacer una lista de similitud
-        for (int i = 0; i < buyLog.length; i++){
-            for (int j = 0; j < buyLog[i].length; j++){
-                if (j != 0){
-                    for (int m = 0; m < targetUser.length; m++){
-                        if (targetUser[m] == buyLog[i][j]){
-                            if (similarity.get(buyLog[i][0]) == null){
+        for (int i = 0; i < buyLog.length; i++) {
+            for (int j = 0; j < buyLog[i].length; j++) {
+                if (j != 0) {
+                    for (int m = 0; m < targetUser.length; m++) {
+                        if (targetUser[m] == buyLog[i][j]) {
+                            if (similarity.get(buyLog[i][0]) == null) {
                                 similarity.put(buyLog[i][0], 1);
                             } else {
                                 similarity.put(buyLog[i][0], similarity.get(buyLog[i][0]) + 1);
@@ -63,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         int counter = 0;
 
         //Buscamos el usuario que tiene más silimitud y lo guardamos en la variable mostSimilarityUser;
-        for (int i = 0; i < buyLog.length; i++){
+        for (int i = 0; i < buyLog.length; i++) {
             if (similarity.get(buyLog[i][0]) != null) {
-                if (similarity.get(buyLog[i][0]) > counter){
+                if (similarity.get(buyLog[i][0]) > counter) {
                     counter = similarity.get(buyLog[i][0]);
                     mostSimilarityUser = buyLog[i][0];
                 }
@@ -77,20 +97,20 @@ public class MainActivity extends AppCompatActivity {
         String recommendations = "";
 
         //Finalmente creamos un string con los arrays del nuevo usuario y del usuario con mas similitud quitando las compras hechas por los dos
-        for (int i = 0; i < buyLog.length; i++){
-            if (buyLog[i][0] == mostSimilarityUser){
+        for (int i = 0; i < buyLog.length; i++) {
+            if (buyLog[i][0] == mostSimilarityUser) {
                 for (int j = 0; j < buyLog.length; j++) {
-                    if (j > 0){
-                        for (int k = 0; k < targetUser.length; k++){
-                            if (targetUser[k] == buyLog[i][j]){
+                    if (j > 0) {
+                        for (int k = 0; k < targetUser.length; k++) {
+                            if (targetUser[k] == buyLog[i][j]) {
                                 intoArray = true;
                             }
                         }
-                        if (intoArray == false){
+                        if (intoArray == false) {
 
                             recommendations += " " + buyLog[i][j];
 
-                        } else{
+                        } else {
                             intoArray = false;
                         }
                     }

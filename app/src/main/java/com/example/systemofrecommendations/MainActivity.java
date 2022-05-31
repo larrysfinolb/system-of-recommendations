@@ -12,10 +12,13 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    Spinner listItems;
+    // Declaramos las variables de los componentes que usaremos.
+    Spinner spinner_listItems;
     TextView txt_listItems;
-    TextView recommendations;
+    TextView txt_recommendations;
+    TextView txt_warning;
 
+    // Declaramos e inicializamos con sus valores el array bidimensional que contendra el registro de compras previo.
     String[][] shoppingHistory = {
             {"Samuel", "Guantes", "Moby Dick(novela)", "Audifonos", "Lentes para sol", "Cafe"},
             {"Juan", "Franela deportiva", "Cafe", "Cafetera", "Cafe", "Cafe"},
@@ -25,46 +28,51 @@ public class MainActivity extends AppCompatActivity {
             {"Tobias", "Moby Dick(novela)", "Cafe", "2001: A Space Odyssey(dvd)", "Audifonos", "Cafe"}
     };
 
-    //String[] newUser = {"Te verde", "Franela deportiva", "Lentes para sol", "Sandalias"};
-    String[] newUser = new String[4];
-    int counter = 0;
+    // Declaramos y establecemos el tamaño del array que contendra la lista de compra actual del usuario.
+    String[] currentBuy = new String[5];
+    int counter = 0; // Declaramos e inicializamos a 0 el contador que usaremos para recorrer newUser.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listItems = findViewById(R.id.listItems);
+        // Inicializamos el desplegable y le añadimos los items que contendra.
+        spinner_listItems = findViewById(R.id.spinner_listItems);
         ArrayAdapter<CharSequence> adapterListItems = ArrayAdapter.createFromResource(this, R.array.items, android.R.layout.simple_spinner_item);
         adapterListItems.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        listItems.setAdapter(adapterListItems);
+        spinner_listItems.setAdapter(adapterListItems);
 
+        // Inicializamos las variables de los componentes de texto que usaremos.
         txt_listItems = findViewById(R.id.txt_listItems);
-        recommendations = findViewById(R.id.recommendations);
+        txt_recommendations = findViewById(R.id.txt_recommendations);
+        txt_warning = findViewById(R.id.txt_warning);
     }
 
+    // Este metodo se encargara de ir añadiendo cada producto de nuestra compra a la lista, con un maximo de 5.
     public void buyItem(View view) {
-        String item = listItems.getSelectedItem().toString();
-        newUser[counter] = item;
-        counter++;
-        String newText = txt_listItems.getText().toString();
-        for (int i = 0; i < counter; i++) {
-            txt_listItems.setText(newText + newUser[i]);
-        }
-        if(counter == 4) {
-            /*for (int i = 0; i < newUser.length; i++){
-                System.out.println(newUser[i]);
-            }*/
-            recommendations.setText(returnRecommendation(shoppingHistory, newUser));
-            System.out.println(returnRecommendation(shoppingHistory, newUser));
+        if (counter < 5) {
+            String item = spinner_listItems.getSelectedItem().toString();
+            String getCurrentBuy = txt_listItems.getText().toString();
+            txt_listItems.setText(getCurrentBuy + item + "\n");
+
+            currentBuy[counter] = item;
+            counter++;
+
+            if (counter == 4) {
+                txt_recommendations.setText(returnRecommendation(shoppingHistory, currentBuy));
+            }
+        } else {
+            txt_warning.setText("¡YA HAS COMPRADO 5 PRODUCTOS!");
         }
     }
+
 
     public String returnRecommendation(String[][] buyLog, String[] targetUser) {
 
         HashMap<String, Integer> similarity = new HashMap<String, Integer>();
 
-        for (int i = 0; i < targetUser.length; i++){
+        for (int i = 0; i < targetUser.length; i++) {
             System.out.println(targetUser[i]);
         }
 

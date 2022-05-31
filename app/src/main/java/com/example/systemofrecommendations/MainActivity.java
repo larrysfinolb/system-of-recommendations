@@ -74,10 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         HashMap<String, Integer> similarity = new HashMap<String, Integer>();
 
-        for (int i = 0; i < targetUser.length; i++) {
-            System.out.println(targetUser[i]);
-        }
-
         //Hacemos un hashmap con modelo <usuario, similitud> para hacer una lista de similitud
         for (int i = 0; i < buyLog.length; i++) {
             for (int j = 0; j < buyLog[i].length; j++) {

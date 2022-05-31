@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     // Declaramos y establecemos el tamaño del array que contendra la lista de compra actual del usuario.
-    String[] currentBuy = new String[5];
+    String[] currentBuy = new String[4];
     int counter = 0; // Declaramos e inicializamos a 0 el contador que usaremos para recorrer newUser.
 
     @Override

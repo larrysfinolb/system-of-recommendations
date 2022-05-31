@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     // Declaramos y establecemos el tamaño del array que contendra la lista de compra actual del usuario.
-    String[] currentBuy = new String[5];
+    String[] currentBuy = new String[4];
     int counter = 0; // Declaramos e inicializamos a 0 el contador que usaremos para recorrer newUser.
 
     @Override
@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
             String getCurrentBuy = txt_listItems.getText().toString();
             txt_listItems.setText(getCurrentBuy + item + "\n");
 
-            currentBuy[counter] = item;
+            if (counter < 4){
+                currentBuy[counter] = item;
+            }
             counter++;
 
             if (counter == 4) {
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    //este algoritmo toma dos arrays, uno bidimencional y otro vectorial, busca la similitud entre estos y retorna un string con las recomendaciones
     public String returnRecommendation(String[][] buyLog, String[] targetUser) {
 
         HashMap<String, Integer> similarity = new HashMap<String, Integer>();
@@ -81,9 +83,7 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < buyLog[i].length; j++) {
                 if (j != 0) {
                     for (int m = 0; m < targetUser.length; m++) {
-                        //System.out.println(targetUser[m].toString() + " - " + buyLog[i][j].toString());
                         if (targetUser[m].equals(buyLog[i][j])) {
-                            System.out.println("equisde");
                             if (similarity.get(buyLog[i][0]) == null) {
                                 similarity.put(buyLog[i][0], 1);
                             } else {
@@ -96,13 +96,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        System.out.println(similarity);
-
 
         String mostSimilarityUser = "";
         int counter = 0;
 
-        //Buscamos el usuario que tiene más silimitud y lo guardamos en la variable mostSimilarityUser;
+        //Buscamos el usuario que tiene más similitud y lo guardamos en la variable mostSimilarityUser;
         for (int i = 0; i < buyLog.length; i++) {
             if (similarity.get(buyLog[i][0]) != null) {
                 if (similarity.get(buyLog[i][0]) > counter) {
@@ -111,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-        System.out.println(mostSimilarityUser);
 
         boolean intoArray = false;
 
@@ -130,8 +126,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (intoArray == false) {
 
-                            recommendations += " " + buyLog[i][j];
-
+                            if (recommendations == ""){
+                                recommendations = buyLog[i][j];
+                            } else{
+                                recommendations += "\n" + buyLog[i][j];
+                            }
                         } else {
                             intoArray = false;
                         }
@@ -139,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-        //System.out.println(recommendations);
 
         return recommendations;
     }
